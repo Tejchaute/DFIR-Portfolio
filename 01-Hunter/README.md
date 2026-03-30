@@ -71,4 +71,4 @@ BCWipe being pre-installed a month before the incident is what elevated this fro
 
 ## Full Report
 
-[View Full Report](./Hunter-Report)
+[View Full Report](./Hunter-Report.pdf)
