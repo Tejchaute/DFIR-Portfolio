@@ -1,11 +1,11 @@
 # Case 02 — Insider
 
-**Platform:** CyberDefenders
-**Category:** Endpoint Forensics
-**Difficulty:** Easy
-**Evidence:** Linux disk image (FirstHack.ad1 — 83.6 MB)
-**Case Number:** 2026-002
-**Date:** 23/03/2026
+**Platform:** CyberDefenders  
+**Category:** Endpoint Forensics  
+**Difficulty:** Easy  
+**Evidence:** Linux disk image (FirstHack.ad1 — 83.6 MB)  
+**Case Number:** 2026-002  
+**Date:** 23/03/2026  
 
 ---
 
