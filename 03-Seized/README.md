@@ -1,7 +1,6 @@
 # Case 03 — Seized
 
-**Platform:** CyberDefenders   
-**Category:** Memory Forensics   
+**Platform:** CyberDefenders  
 **Difficulty:** Medium  
 **Evidence:** Linux memory dump (dump.mem — 0.99 GB)  
 **Case Number:** 2026-003  
@@ -9,88 +8,76 @@
 
 ---
 
-## Scenario
+## What was the case about?
 
-A memory forensics investigation was conducted on a compromised Linux CentOS 7 system after suspicious activity was detected. A full memory dump was acquired to analyze running processes, network connections, bash history, and potential rootkits.
+A Linux CentOS 7 system was suspected to be compromised. No disk image — just a RAM dump. The entire investigation had to be done from memory using Volatility 2.
 
-The objective was to determine how the attacker gained access, what actions were performed, and how persistence was maintained.
-
----
-
-## What I Found
-
-The investigation revealed a **multi-stage system compromise** involving remote access, payload delivery, persistence mechanisms, and kernel-level stealth techniques.
-
-Key findings include:
-
-- **Initial access via reverse shell** — attacker used `ncat` to establish a connection to a remote system
-- **Interactive shell upgrade** — Python `pty.spawn` used to convert shell into a fully interactive TTY
-- **Active C2 communication** — live TCP connection identified (192.168.49.1:12345)
-- **Encoded command execution** — base64 payload found in bash history
-- **Payload delivery** — attacker cloned a repository and fetched payload from Pastebin
-- **Persistence via SSH key injection** — RSA key added to `/home/k3vin/.ssh/authorized_keys`
-- **Kernel-level rootkit detected** — `sysemptyrect` modified syscall table
-- **Advanced obfuscation** — encryption key `1337tibbartibbar`
-
-These findings confirm a **fully compromised system with long-term persistence and stealth capabilities**.
+This was my first pure memory forensics case and the one I learned the most from.
 
 ---
 
-## Artifacts Investigated
+## What I found
 
-| Artifact Type        | Location / Source          | Key Finding                                      |
-|----------------------|----------------------------|--------------------------------------------------|
-| OS Information       | strings + grep             | CentOS Linux 7.7.1908 identified                 |
-| Running processes    | linux_pslist, linux_pstree | Suspicious `ncat` (PID 2854)                     |
-| Bash history         | linux_bash                 | Encoded payload + attacker commands              |
-| Network connections  | linux_netstat              | Reverse shell connection                         |
-| Shell activity       | linux_psaux                | Python TTY upgrade                               |
-| Memory extraction    | linux_dump_map             | SSH key injection                                |
-| Rootkit detection    | linux_check_syscall        | Syscall table hooked                             |
-| Kernel modules       | linux_lsmod                | Rootkit + encryption key                         |
+The attacker had done everything right from a persistence standpoint — which is exactly what made it interesting to investigate.
 
----
+Initial access was through a reverse shell using `ncat` (PID 2854), connecting back to `192.168.49.1` on port `12345`. I found this through `linux_netstat` — the connection was still live in memory at the time of the dump. From there the attacker upgraded to a fully interactive shell using a Python one-liner (`python -c 'import pty; pty.spawn("/bin/bash")'`) — standard technique to make a reverse shell usable for real work.
 
-## Tools Used
+The bash history recovered via `linux_bash` on PID 2887 showed the attacker pulling a base64-encoded payload from an external Pastebin URL via git clone. Decoded it and confirmed it was a message left by the attacker.
 
-| Tool         | Version | Purpose                                      |
-|--------------|--------|----------------------------------------------|
-| Volatility 2 | 2.6.1  | Memory analysis                              |
-| strings      | 2.44   | Extract raw strings                          |
-| grep         | 3.11   | Filter artifacts                             |
-| base64       | 9.5    | Decode payload                               |
+The persistence mechanisms were the most technically interesting part. The attacker added an RSA public key directly to `/home/k3vin/.ssh/authorized_keys` — which means even if someone noticed and changed k3vin's password, the attacker could still SSH straight back in. Password resets do not touch authorized_keys files. A lot of incident responders get caught off guard by this.
+
+On top of that there was a kernel-level rootkit — `sysemptyrect` — detected through `linux_check_syscall`. It had hooked the syscall table to hide itself from the OS. The encryption key it used (`1337tibbartibbar`) came out of `linux_lsmod -P`. A rootkit hiding at the kernel level combined with SSH key persistence means the attacker was planning to be in this system for a very long time.
 
 ---
 
-## Event Timeline
+## Artifacts that mattered most
 
-| Seq | Phase                | Event Description |
-|-----|---------------------|------------------|
-| 1   | Initial Access      | Reverse shell via `ncat` |
-| 2   | Execution           | Shell upgraded using Python TTY |
-| 3   | Discovery           | Base64 command executed |
-| 4   | Payload Delivery    | Git clone + Pastebin payload |
-| 5   | Persistence (SSH)   | RSA key injected |
-| 6   | Persistence (Rootkit)| Kernel rootkit installed |
-| 7   | Post-Compromise     | Full system compromise |
-
----
-
-## Key Takeaway
-
-This case shows how attackers combine:
-
-- Remote access (reverse shell)
-- Payload execution
-- Persistence (SSH keys)
-- Advanced stealth (kernel rootkits)
-
-**Key lesson:** Memory forensics is critical — many artifacts (like rootkits and live connections) are not visible on disk.
-
-The combination of **SSH persistence + kernel rootkit** indicates a **highly skilled attacker with long-term access goals**.
+| Artifact | Volatility Plugin | What it showed |
+|----------|------------------|----------------|
+| Running processes | `linux_pstree`, `linux_pslist` | ncat running — reverse shell process identified (PID 2854) |
+| Network connections | `linux_netstat` | Live C2 connection to 192.168.49.1:12345 |
+| Shell activity | `linux_psaux` | Python TTY upgrade command in process args |
+| Bash history | `linux_bash` | Encoded payload, git clone, attacker commands (PID 2887) |
+| Memory extraction | `linux_dump_map` | SSH public key recovered from process memory |
+| Rootkit detection | `linux_check_syscall` | sysemptyrect hooking the syscall table |
+| Kernel modules | `linux_lsmod -P` | Rootkit encryption key identified |
 
 ---
 
-## Full Report
+## Volatility commands I ran
+
+```bash
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_pstree
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_psaux
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_netstat
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_bash
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_dump_map --pid=2887 -D ./output/
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_check_syscall
+vol.py -f dump.mem --profile=LinuxCentos7_3_10_0-514x64 linux_lsmod -P
+strings dump.mem | grep -i 'centos' | head -20
+```
+
+---
+
+## Tools used
+
+| Tool | Version |
+|------|---------|
+| Volatility 2 | 2.6.1 |
+| strings | 2.44 |
+| grep | 3.11 |
+| base64 | 9.5 |
+
+---
+
+## What I took away from this
+
+The thing that stuck with me: changing a password does absolutely nothing if the attacker already has their SSH key in `authorized_keys`. I knew this conceptually before but seeing it in an actual investigation made it real in a way reading about it never did.
+
+Some evidence only exists in RAM. The live network connection, the running ncat process, the bash history in memory — none of that would be on disk. If someone had rebooted this machine before taking the dump, that evidence would be gone forever. Memory forensics and disk forensics are not interchangeable — they show you completely different things, and you need both.
+
+The rootkit was the hardest part to interpret. Knowing that `linux_check_syscall` flagged something was easy. Understanding what `sysemptyrect` was actually doing and why the encryption key mattered took more digging outside the tool output — which is where the real learning happened.
+
+---
 
 [View Full Report](./Seized-Report.pdf)
