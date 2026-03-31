@@ -4,62 +4,66 @@
 
 ---
 
-## About This Repository
+## About
 
-This portfolio documents my progression through digital forensics and incident response. Each case includes a full investigation report — artifact tables, event timelines, tools used, and documented commands — written to professional DFIR standards.
+This repository documents my journey through digital forensics and incident response. Every case here is a real investigation I worked through — not just challenge completions, but full reports with artifact tables, event timelines, and documented methodology.
 
----
-
-## Case Studies
-
-| # | Case | Platform | Evidence Type | Difficulty | Key Techniques |
-|---|------|----------|---------------|------------|----------------|
-| 01 | [Hunter](./01-Hunter/) | CyberDefenders | Windows Disk Image | Medium | Registry analysis, Prefetch, UserAssist, browser artifacts, LNK files |
-| 02 | [Insider](./02-Insider/) | CyberDefenders | Linux Disk Image | Easy | FTK Imager, bash history, Linux logs, credential access |
-| 03 | [Seized](./03-Seized/) | CyberDefenders | Linux Memory Dump | Medium | Volatility 2, reverse shell detection, SSH key persistence, rootkit analysis |
-
-*New cases added weekly as I progress through the learning path.*
+I started this in early 2026 as part of a structured learning path toward becoming a DFIR analyst. Each case folder has a write-up of what I found, what tools I used, and what I actually learned from it — written the way I'd explain it to someone, not the way a textbook would.
 
 ---
 
-## Skills Demonstrated
+## Cases
+
+| # | Case | Evidence Type | Platform | Difficulty | Key Skills |
+|---|------|--------------|----------|------------|------------|
+| 01 | [Hunter](./01-Hunter/) | Windows disk image | CyberDefenders | Medium | Registry, Prefetch, Skype DB, anti-forensics |
+| 02 | [Insider](./02-Insider/) | Linux disk image | CyberDefenders | Easy | Bash history, auth logs, FTK Imager |
+| 03 | [Seized](./03-Seized/) | Linux memory dump | CyberDefenders | Medium | Volatility 2, rootkit detection, SSH persistence |
+
+*New cases added as I progress through the learning path.*
+
+---
+
+## Skills Built So Far
 
 **Disk Forensics**
-- Windows NTFS artifact analysis — Registry hives, Prefetch files, LNK files, UserAssist, Recycle Bin
-- Linux EXT4 forensics — bash history, auth logs, dpkg logs, cron jobs
-- FTK Imager and Autopsy for image acquisition and analysis
+- Windows artifact analysis — Registry hives (SAM, SYSTEM, NTUSER.DAT), Prefetch files, LNK files, UserAssist, Jump Lists, Shellbags, Recycle Bin
+- Linux forensics — bash history, auth logs, dpkg logs, cron jobs, filesystem artifact recovery
+- Image acquisition and analysis with FTK Imager and Autopsy
 
 **Memory Forensics**
-- Volatility 2 plugins — linux_pstree, linux_psaux, linux_netstat, linux_bash, linux_check_syscall, linux_lsmod, linux_dump_map
-- Process analysis, network connection mapping, rootkit detection
-- Base64 payload decoding and attacker command reconstruction
+- Volatility 2 on Linux memory dumps — process trees, network connections, bash history, syscall table inspection, kernel module analysis
+- Identifying live C2 connections, reverse shells, and rootkits from RAM
+- Recovering artifacts that don't exist on disk
 
-**Investigation & Reporting**
-- Formal DFIR report writing — artifact tables, event timelines, chain of custody documentation
-- Attack chain reconstruction from raw forensic evidence
-- Cross-source artifact correlation
+**Investigation and Reporting**
+- Writing formal DFIR reports — artifact tables, event timelines, chain of custody
+- Reconstructing attack chains from raw evidence across multiple artifact sources
+- Documenting methodology to professional standards
 
 ---
 
 ## Toolset
 
-| Category          | Tools |
-|-------------------|-------|
-| Disk analysis     | Autopsy, FTK Imager, Sleuth Kit |
-| Memory analysis   | Volatility 2, strings, grep |
-| Registry parsing  | RegRipper, Registry Explorer |
-| File carving      | Foremost, PhotoRec |
-| Network forensics | Wireshark, NetworkMiner *(in progress)* |
-| Scripting         | Python, Bash, sqlite3 |
-| Environment       | SIFT Workstation (Ubuntu) |
+| Category | Tools |
+|----------|-------|
+| Disk analysis | Autopsy, FTK Imager, Sleuth Kit |
+| Memory analysis | Volatility 2, strings, grep |
+| Registry parsing | RegRipper, Registry Explorer |
+| File carving | Foremost, PhotoRec |
+| Browser forensics | DB Browser for SQLite, Hindsight |
+| Log parsing | EvtxECmd, JLECmd, WinPrefetchViewer |
+| Network forensics | Wireshark, NetworkMiner *(learning)* |
+| Environment | SIFT Workstation (Ubuntu) |
 
 ---
 
 ## Learning Path
 
 ```
-Phase 1 — Foundations        [Completed] OS internals, networking, Linux, Python
-Phase 2 — Core Forensics     [In Progress] Disk, memory, network, mobile forensics
+Phase 1 — Foundations     [Completed]    OS internals, networking, Linux, Python basics
+Phase 2 — Core Forensics  [In Progress]  Disk, memory, network, mobile forensics
+
 ```
 
 ---
@@ -67,4 +71,4 @@ Phase 2 — Core Forensics     [In Progress] Disk, memory, network, mobile foren
 ## Connect
 
 - LinkedIn: [linkedin.com/in/tej-chaute](https://www.linkedin.com/in/tej-chaute)
-- All reports are attached as PDFs inside each case folder.
+- Reports are attached as PDFs inside each case folder
