@@ -2,8 +2,8 @@
 
 **Platform:** CyberDefenders  
 **Difficulty:** Medium  
-**Evidence:** Linux disk image (victoria-v8.sda1.img — 909 MB) + memory dump (victoria-v8.memdump.img — 255 MB) 
-**Case Number:** 2026-004  
+**Evidence:** Linux disk image (victoria-v8.sda1.img — 909 MB) + memory dump (victoria-v8.memdump.img — 255 MB)  
+**Case Number:** 2026-004   
 **Date:** 01/04/2026  
 
 ---
