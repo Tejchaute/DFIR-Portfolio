@@ -19,6 +19,7 @@ I started this in early 2026 as part of a structured learning path toward becomi
 | 01 | [Hunter](./01-Hunter/) | Windows disk image | CyberDefenders | Medium | Registry, Prefetch, Skype DB, anti-forensics |
 | 02 | [Insider](./02-Insider/) | Linux disk image | CyberDefenders | Easy | Bash history, auth logs, FTK Imager |
 | 03 | [Seized](./03-Seized/) | Linux memory dump | CyberDefenders | Medium | Volatility 2, rootkit detection, SSH persistence |
+| 04 | [Ulysses](./04-Ulysses/) | Linux disk image + memory dump | CyberDefenders | Medium | Disk + memory correlation, Exim4 exploitation, netcat backdoor |
 
 *New cases added as I progress through the learning path.*
 
@@ -35,6 +36,11 @@ I started this in early 2026 as part of a structured learning path toward becomi
 - Volatility 2 on Linux memory dumps — process trees, network connections, bash history, syscall table inspection, kernel module analysis
 - Identifying live C2 connections, reverse shells, and rootkits from RAM
 - Recovering artifacts that don't exist on disk
+
+**Cross-Source Investigation**
+- Correlating disk and memory evidence from the same machine to reconstruct a complete attack chain
+- Identifying which questions each source can and cannot answer independently
+- Building unified timelines from filesystem timestamps and memory artifacts
 
 **Investigation and Reporting**
 - Writing formal DFIR reports — artifact tables, event timelines, chain of custody
