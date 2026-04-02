@@ -1,5 +1,4 @@
 # DFIR Portfolio — Tej Chaute
-
 > Aspiring Digital Forensics Analyst | Building hands-on investigation skills through structured lab work and real-world style case analysis.
 
 ---
@@ -19,7 +18,8 @@ I started this in early 2026 as part of a structured learning path toward becomi
 | 01 | [Hunter](./01-Hunter/) | Windows disk image | CyberDefenders | Medium | Registry, Prefetch, Skype DB, anti-forensics |
 | 02 | [Insider](./02-Insider/) | Linux disk image | CyberDefenders | Easy | Bash history, auth logs, FTK Imager |
 | 03 | [Seized](./03-Seized/) | Linux memory dump | CyberDefenders | Medium | Volatility 2, rootkit detection, SSH persistence |
-| 04 | [Ulysses](./04-Ulysses/) | Linux disk image + memory dump | CyberDefenders | Medium | Disk + memory correlation, Exim4 exploitation, netcat backdoor |
+| 04 | [Ulysses](./04-Ulysses/) | Linux disk + memory dump | CyberDefenders | Medium | Disk + memory correlation, Exim4 exploitation, netcat backdoor |
+| 05 | [AfricanFalls](./05-AfricanFalls/) | Windows disk image | CyberDefenders | Medium | Browser history, NTLM hash cracking, EXIF metadata, USB forensics |
 
 *New cases added as I progress through the learning path.*
 
@@ -29,8 +29,10 @@ I started this in early 2026 as part of a structured learning path toward becomi
 
 **Disk Forensics**
 - Windows artifact analysis — Registry hives (SAM, SYSTEM, NTUSER.DAT), Prefetch files, LNK files, UserAssist, Jump Lists, Shellbags, Recycle Bin
+- Windows credential forensics — NTLM hash extraction via Mimikatz, offline cracking with Hashcat
 - Linux forensics — bash history, auth logs, dpkg logs, cron jobs, filesystem artifact recovery
 - Image acquisition and analysis with FTK Imager and Autopsy
+- External device forensics — USBSTOR registry keys, EXIF metadata, device identification without physical access
 
 **Memory Forensics**
 - Volatility 2 on Linux memory dumps — process trees, network connections, bash history, syscall table inspection, kernel module analysis
@@ -55,9 +57,11 @@ I started this in early 2026 as part of a structured learning path toward becomi
 |----------|-------|
 | Disk analysis | Autopsy, FTK Imager, Sleuth Kit |
 | Memory analysis | Volatility 2, strings, grep |
-| Registry parsing | RegRipper, Registry Explorer |
+| Registry parsing | RegRipper, Registry Explorer, Mimikatz |
+| Hash cracking | Hashcat |
 | File carving | Foremost, PhotoRec |
-| Browser forensics | DB Browser for SQLite, Hindsight |
+| Browser forensics | DB Browser for SQLite, BrowsingHistoryView, Hindsight |
+| Metadata analysis | EXIF Viewer |
 | Log parsing | EvtxECmd, JLECmd, WinPrefetchViewer |
 | Network forensics | Wireshark, NetworkMiner *(learning)* |
 | Environment | SIFT Workstation (Ubuntu) |
