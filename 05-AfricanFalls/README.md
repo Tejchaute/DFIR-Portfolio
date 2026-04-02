@@ -53,4 +53,4 @@ The investigation uncovered a clear sequence of suspicious behaviour:
 **Timestamp gaps are findings too** — Some artifacts (USB copy times, certain registry writes) had no reliable timestamps. Documenting what *couldn't* be determined — and why — is part of professional reporting.
 
 
-[View Full Report] (./Africanfalls-Report)
+[View Full Report](./Africanfalls-Report.pdf)
