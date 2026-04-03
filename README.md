@@ -9,6 +9,8 @@ This repository documents my journey through digital forensics and incident resp
 
 I started this in early 2026 as part of a structured learning path toward becoming a DFIR analyst. Each case folder has a write-up of what I found, what tools I used, and what I actually learned from it — written the way I'd explain it to someone, not the way a textbook would.
 
+I'm currently in Phase 2 (Core Forensics), working through disk, memory, network, and mobile labs before moving into certifications.
+
 ---
 
 ## Cases
@@ -20,6 +22,7 @@ I started this in early 2026 as part of a structured learning path toward becomi
 | 03 | [Seized](./03-Seized/) | Linux memory dump | CyberDefenders | Medium | Volatility 2, rootkit detection, SSH persistence |
 | 04 | [Ulysses](./04-Ulysses/) | Linux disk + memory dump | CyberDefenders | Medium | Disk + memory correlation, Exim4 exploitation, netcat backdoor |
 | 05 | [AfricanFalls](./05-AfricanFalls/) | Windows disk image | CyberDefenders | Medium | Browser history, NTLM hash cracking, EXIF metadata, USB forensics |
+| 06 | [Phishy](./06-Phishy/) | Windows disk image | CyberDefenders | Medium | Phishing analysis, VBA macros, WhatsApp forensics, credential harvesting |
 
 *New cases added as I progress through the learning path.*
 
@@ -29,10 +32,11 @@ I started this in early 2026 as part of a structured learning path toward becomi
 
 **Disk Forensics**
 - Windows artifact analysis — Registry hives (SAM, SYSTEM, NTUSER.DAT), Prefetch files, LNK files, UserAssist, Jump Lists, Shellbags, Recycle Bin
-- Windows credential forensics — NTLM hash extraction via Mimikatz, offline cracking with Hashcat
+- Windows credential forensics — NTLM hash extraction via Mimikatz, offline cracking with Hashcat, saved browser credential recovery with PasswordFox
 - Linux forensics — bash history, auth logs, dpkg logs, cron jobs, filesystem artifact recovery
 - Image acquisition and analysis with FTK Imager and Autopsy
 - External device forensics — USBSTOR registry keys, EXIF metadata, device identification without physical access
+- Phishing attack reconstruction — malicious document analysis, VBA macro deobfuscation, multi-stage payload tracing
 
 **Memory Forensics**
 - Volatility 2 on Linux memory dumps — process trees, network connections, bash history, syscall table inspection, kernel module analysis
@@ -60,8 +64,11 @@ I started this in early 2026 as part of a structured learning path toward becomi
 | Registry parsing | RegRipper, Registry Explorer, Mimikatz |
 | Hash cracking | Hashcat |
 | File carving | Foremost, PhotoRec |
-| Browser forensics | DB Browser for SQLite, BrowsingHistoryView, Hindsight |
+| Browser forensics | DB Browser for SQLite, BrowsingHistoryView, Hindsight, PasswordFox |
+| Document analysis | oledump, olevba, CyberChef |
+| Messaging forensics | WhatsApp Viewer |
 | Metadata analysis | EXIF Viewer |
+| Threat intelligence | VirusTotal |
 | Log parsing | EvtxECmd, JLECmd, WinPrefetchViewer |
 | Network forensics | Wireshark, NetworkMiner *(learning)* |
 | Environment | SIFT Workstation (Ubuntu) |
