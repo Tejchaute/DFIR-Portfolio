@@ -64,4 +64,4 @@ On top of all that, the victim also visited a fake Apple login page at `appIe.co
 
 ---
 
-[View Full Report](./Phishy-Report)
+[View Full Report](./Phishy-Report.pdf)
