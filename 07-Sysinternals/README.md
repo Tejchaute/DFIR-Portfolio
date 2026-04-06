@@ -43,20 +43,6 @@ VirusTotal's behavioural analysis showed the rest: the initial payload spawned `
 
 ---
 
-## Event Timeline
-
-| Timestamp (UTC) | Event |
-|-----------------|-------|
-| 2022-11-15 21:17:03 | PowerShell used to modify hosts file — attacker domains redirected to 192.168.15.10 |
-| 2022-11-15 21:18:00 | `Sysinternals.exe` executed — confirmed via AmCache |
-| 2022-11-15 21:18:12 | Last login recorded for user IEUser (SAM) |
-| 2022-11-15 21:18:51 | `Sysinternals.exe` last modified timestamp recorded in ShimCache — file later deleted |
-| 2022-11-15 21:21:10 ~ | AmCache SHA1 hash recorded — final on-disk timestamp before inferred post-execution activity |
-| 2022-11-15 21:21 ~ | Malware spawned `cmd.exe` → executed `vmtoolsIO.exe` |
-| 2022-11-15 21:21 ~ | `VMwareIOHelperService` installed as autostart Windows service |
-
----
-
 ## What I Learned
 
 **Prefetch absence is not proof of non-execution.** This sounds obvious in hindsight but it's easy to treat a missing artifact as evidence of nothing happening. The right move is to treat it as a gap and keep checking. ShimCache and AmCache both exist precisely because Prefetch isn't always available — Windows 10 Enterprise disables Prefetch by default on SSDs.
