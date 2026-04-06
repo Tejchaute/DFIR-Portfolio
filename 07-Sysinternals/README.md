@@ -55,4 +55,4 @@ VirusTotal's behavioural analysis showed the rest: the initial payload spawned `
 
 ---
 
-[View Full Report](./Sysinternals-Report)
+[View Full Report](./Sysinternals-Report.pdf)
