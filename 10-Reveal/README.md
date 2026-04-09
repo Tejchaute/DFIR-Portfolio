@@ -2,7 +2,7 @@
 
 **Platform:** CyberDefenders  
 **Category:** Endpoint Forensics — Memory  
-**Difficulty:** Medium (Retired)  
+**Difficulty:** Easy (Retired)  
 **Evidence:** Windows memory dump — `192-Reveal.dmp` (2.00 GB)  
 **Case Number:** 2026-010  
 
